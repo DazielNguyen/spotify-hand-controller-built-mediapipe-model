@@ -1,6 +1,5 @@
 """MacOS control actions mapped from gestures."""
 
-
 class MacController:
     """Execute Mac control actions."""
 

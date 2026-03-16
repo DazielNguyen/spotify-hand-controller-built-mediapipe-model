@@ -1,6 +1,5 @@
 """Gesture classification module."""
 
-
 class GestureClassifier:
     """Classify hand landmarks into gesture labels."""
 

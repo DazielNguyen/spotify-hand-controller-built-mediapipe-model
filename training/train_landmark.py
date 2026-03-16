@@ -1,8 +1,7 @@
 """Training entrypoint for landmark model."""
 
-
 def main() -> None:
-    """Run landmark model training pipeline."""
+    """Training placeholder entrypoint."""
     print("TODO: implement landmark model training")
 
 

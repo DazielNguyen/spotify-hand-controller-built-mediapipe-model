@@ -55,41 +55,45 @@
 
 ### Cấu trúc thư mục
 
-- [ ] Dọn dẹp và tổ chức lại cấu trúc project:
+- [x] Dọn dẹp và tổ chức lại cấu trúc project:
   ```
   ├── data/
-  │   ├── dataset.py          # FreiHANDDataset
-  │   └── transforms.py       # augmentation transforms
+  │   ├── dataset.py          # dataset loading helpers
+  │   └── transforms.py       # image and landmark preprocessing
+  ├── docs/
   ├── models/
-  │   ├── pose_net.py
-  │   └── shape_net.py
+  │   ├── hand_detector/
+  │   │   └── model.py
+  │   └── landmark_model/
+  │       └── model.py
   ├── training/
-  │   ├── losses.py
-  │   ├── train_pose.py
-  │   └── train_shape.py
+  │   └── train_landmark.py
   ├── evaluation/
-  │   ├── eval_pose.py
-  │   └── eval_shape.py
+  │   └── eval_landmark.py
   ├── utils/
-  │   ├── coords.py           # xyz_to_25D, projection
-  │   └── softargmax.py
+  │   └── landmarks.py        # normalization and gesture heuristics
   ├── inference/
-  │   └── inference_image.py
+  │   ├── inference_image.py
+  │   └── webcam_inference.py
+  ├── gesture/
+  │   └── classifier.py
+  ├── mac_control/
+  │   └── control.py
   └── README.md
   ```
 - [ ] Xóa các file nháp, script test không cần thiết
-- [ ] Đảm bảo mọi file đều có import rõ ràng, không hardcode đường dẫn tuyệt đối
+- [x] Đảm bảo mọi file đều có import rõ ràng, không hardcode đường dẫn tuyệt đối
 
 ### README.md
 
-- [ ] Viết `README.md` đầy đủ:
-  - [ ] **Paper được implement:** tên paper, tác giả, link arxiv
+- [x] Viết `README.md` đầy đủ:
+  - [x] **Mô tả dự án:** mục tiêu, ràng buộc không dùng MediaPipe, pipeline tổng quát
   - [ ] **Demo GIF/ảnh:** dán ảnh từ Checkpoint 7.2 vào đầu README
-  - [ ] **Kết quả đạt được:** PCK@20mm = XX%, Mean Mesh Error = X.XX cm
-  - [ ] **Cài đặt môi trường:** `pip install -r requirements.txt`
-  - [ ] **Cách chạy training:** command line cho Pose Net và Shape Net
-  - [ ] **Cách chạy inference:** `python inference/inference_image.py --image path/to/hand.jpg`
-  - [ ] **Cấu trúc thư mục:** giải thích ngắn gọn từng folder
+  - [ ] **Kết quả đạt được:** cập nhật metrics thực tế sau khi train xong
+  - [x] **Cài đặt môi trường:** `pip install -r requirements.txt`
+  - [x] **Cách chạy training:** `python training/train_landmark.py ...`
+  - [x] **Cách chạy inference:** `python inference/inference_image.py --image path/to/hand.jpg`
+  - [x] **Cấu trúc thư mục:** giải thích ngắn gọn từng folder
 - [ ] Commit và push lên GitHub
 
 ---
