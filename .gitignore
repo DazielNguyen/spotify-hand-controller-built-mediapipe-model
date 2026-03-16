@@ -1,55 +1,21 @@
-# Byte-compiled / optimized / DLL files
+# Python
 __pycache__/
 *.py[cod]
-*$py.class
+*.pyo
+*.pyd
+*.so
 
-# Virtual environment
+# Virtual environments
+.venv/
 venv/
-env/
-ENV/
-.venv
 
-# Jupyter Notebook
-.ipynb_checkpoints
+# Tool caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
-# Model files
-*.h5
-*.pkl
-*.pt
-*.pth
-*.onnx
-models/saved_models/*.tflite
-models/checkpoints/
-
-# Data files
-data/raw/*
-data/processed/*
-data/annotations/*
-!data/**/.gitkeep
-
-# Configuration
-config/config.py
+# OS files
+.DS_Store
 
 # IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
-logs/
-
-# Testing
-.pytest_cache/
-.coverage
-htmlcov/
-
-# Distribution
-dist/
-build/
-*.egg-info/
+.vscode/*.code-workspace
