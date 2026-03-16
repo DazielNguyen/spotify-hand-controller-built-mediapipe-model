@@ -2,13 +2,13 @@
 
 ## 1. Overview
 
-The real-time inference system processes webcam frames and performs gesture-based control.
+The real-time inference system processes webcam frames and performs gesture-based music control.
 
 Pipeline:
 
 ```
 
-Webcam → Hand Detection → Hand Crop → Landmark Prediction → Gesture Recognition → System Action
+Webcam → Hand Detection → Hand Crop → Landmark Prediction → Gesture Recognition → Decision Layer → Music Action
 
 ```
 
@@ -60,7 +60,8 @@ Steps per frame:
 4. Resize to model input
 5. Run landmark prediction
 6. Recognize gesture
-7. Trigger system action
+7. Apply confidence threshold + debounce + cooldown
+8. Trigger system action
 
 ---
 
@@ -139,7 +140,7 @@ RandomForest
 
 ---
 
-# 6. MacOS Control
+# 6. MacOS Music Control
 
 System commands are triggered using:
 
@@ -155,6 +156,7 @@ Example:
 
 play/pause
 next track
+previous track
 volume up
 volume down
 
@@ -170,7 +172,18 @@ pyautogui.press("playpause")
 
 ---
 
-# 7. Performance Optimization
+# 7. Command Safety Rules
+
+To make the app reliable for daily use:
+
+1. Use confidence threshold before accepting gesture
+2. Require N consecutive frames for debounce
+3. Add per-command cooldown window
+4. If gesture is unstable, classify as `unknown` and do nothing
+
+---
+
+# 8. Performance Optimization
 
 ## Frame Skipping
 
@@ -224,7 +237,7 @@ lower latency
 
 ---
 
-# 8. Expected Performance
+# 9. Expected Performance
 
 Target latency:
 
@@ -252,7 +265,7 @@ Expected FPS:
 
 ---
 
-# 9. Future Improvements
+# 10. Future Improvements
 
 Possible enhancements:
 

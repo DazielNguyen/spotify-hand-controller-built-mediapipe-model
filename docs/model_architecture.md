@@ -2,20 +2,21 @@
 
 ## 1. Overview
 
-This project uses a two-stage deep learning architecture:
+This project uses a two-stage deep learning architecture plus an application control layer:
 
 1. Hand Detection Model
 2. Hand Landmark Estimation Model
+3. Gesture-to-Music Control Layer
 
 This design follows the common pipeline used in modern hand pose estimation systems.
 
 ```
 
-Frame → Hand Detection → Crop → Landmark Prediction
+Frame → Hand Detection → Crop → Landmark Prediction → Gesture Label → Music Command
 
 ```
 
-The separation improves performance and reduces computational cost.
+The separation improves performance and reduces computational cost, while the control layer makes the system practical as a real music controller app.
 
 ---
 
@@ -199,7 +200,26 @@ Loss = mean((predicted_keypoints - ground_truth_keypoints)^2)
 
 ---
 
-# 4. Keypoint Coordinate System
+# 4. Gesture-To-Command Layer
+
+After landmarks are predicted, a lightweight classifier outputs gesture labels.
+
+Recommended command mapping:
+
+- `fist` → `play_pause`
+- `open_palm` → `next_track`
+- `victory` → `previous_track`
+- `thumb_up` → `volume_up`
+- `thumb_down` → `volume_down`
+
+To avoid accidental triggers, apply:
+
+- confidence threshold
+- frame-based debounce
+- cooldown window per command
+- fallback to `unknown`
+
+# 5. Keypoint Coordinate System
 
 All keypoints are normalized relative to image size.
 
@@ -222,7 +242,7 @@ Range:
 
 ---
 
-# 5. Training Strategy
+# 6. Training Strategy
 
 Training procedure:
 
@@ -232,7 +252,7 @@ Training procedure:
 
 ---
 
-# 6. Model Optimization
+# 7. Model Optimization
 
 For real-time performance, the trained model will be converted to:
 

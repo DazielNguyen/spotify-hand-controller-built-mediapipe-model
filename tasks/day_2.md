@@ -4,21 +4,20 @@
 
 ---
 
-## Sáng: Cài đặt và Hiểu `manopth`
+## Sáng: Cài đặt và Hiểu MANO
 
-- [ ] Clone thư viện `manopth` về thư mục `third_party/manopth`:
+- [ ] Chọn thư viện MANO phù hợp để dùng chung với pipeline TensorFlow:
   ```bash
-  git clone https://github.com/hassony2/manopth third_party/manopth
-  pip install third_party/manopth/
+  pip install smplx trimesh
   ```
-- [ ] Tải file model weights MANO (`MANO_RIGHT.pkl`) từ trang chủ MANO, đặt vào `third_party/manopth/mano/models/`
+- [ ] Tải file model weights MANO (`MANO_RIGHT.pkl`) từ trang chủ MANO, đặt vào thư mục `models/mano/`
 - [ ] Đọc và hiểu cấu trúc input của MANO:
   - [ ] `pose` (alias `theta`): tensor shape `(B, 45)` — góc xoay Axis-Angle của 15 khớp (mỗi khớp 3 chiều)
   - [ ] `betas` (alias `beta`): tensor shape `(B, 10)` — hệ số hình dạng bàn tay (dài/ngắn, mập/gầy)
   - [ ] `global_orient`: tensor shape `(B, 3)` — hướng xoay toàn bộ bàn tay trong không gian
 - [ ] Viết script `scripts/test_mano.py`:
-  - [ ] Khởi tạo model MANO: `mano_layer = ManoLayer(mano_root=..., use_pca=False)`
-  - [ ] Truyền vào các tensor toàn số 0: `pose=torch.zeros(1,45)`, `betas=torch.zeros(1,10)`
+  - [ ] Khởi tạo model MANO từ thư viện đã chọn
+  - [ ] Truyền vào các tensor toàn số 0: `pose=tf.zeros((1, 45))`, `betas=tf.zeros((1, 10))`
   - [ ] In shape của output: `vertices` và `joints`
 
 > **CHECKPOINT 2.1:** Output phải trả về `vertices` shape `[1, 778, 3]` và `joints` shape `[1, 21, 3]`. Không có RuntimeError về device hay shape mismatch.
@@ -29,7 +28,7 @@
 
 - [ ] Cài `trimesh`: `pip install trimesh`
 - [ ] Lấy tensor `vertices [1, 778, 3]` từ MANO, chuyển sang numpy
-- [ ] Lấy `faces` (tam giác) từ `mano_layer.th_faces` — shape `(1538, 3)`
+- [ ] Lấy `faces` (tam giác) từ model MANO hoặc file template mesh — shape `(1538, 3)`
 - [ ] Tạo `trimesh.Trimesh(vertices=v, faces=f)` và lưu thành `outputs/hand.obj`
 - [ ] Mở `hand.obj` bằng phần mềm xem 3D (Preview trên Mac / 3D Viewer trên Windows)
 

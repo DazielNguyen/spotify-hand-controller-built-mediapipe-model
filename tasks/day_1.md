@@ -36,24 +36,27 @@
 
 ---
 
-## Tối: Xây dựng PyTorch `Dataset` và `DataLoader`
+## Tối: Xây dựng TensorFlow `tf.data.Dataset`
 
-- [ ] Tạo file `data/dataset.py`, viết class `FreiHANDDataset(torch.utils.data.Dataset)`:
-  - [ ] `__init__`: load danh sách đường dẫn ảnh, load `K` và `xyz` từ JSON
-  - [ ] `__len__`: trả về tổng số sample
-  - [ ] `__getitem__`: trả về `(image_tensor, K_matrix, keypoints_3d)` cho index bất kỳ
-- [ ] Thêm Data Augmentation với `torchvision.transforms`:
+- [ ] Tạo file `data/dataset.py`, viết pipeline với `tf.data.Dataset`:
+  - [ ] Viết hàm load danh sách đường dẫn ảnh, load `K` và `xyz` từ JSON
+  - [ ] Tạo `tf.data.Dataset.from_tensor_slices(...)` từ paths và labels
+  - [ ] Viết hàm parse sample trả về `image_tensor`, `K_matrix`, `keypoints_3d`
+- [ ] Thêm Data Augmentation với `tf.image` hoặc Keras preprocessing layers:
   - [ ] Random Crop (crop vuông bao quanh vùng tay)
   - [ ] Resize về `224x224`
   - [ ] Color Jitter (Brightness, Contrast, Saturation)
   - [ ] **Quan trọng:** Khi crop/resize ảnh, phải cập nhật lại `fx`, `fy`, `cx`, `cy` trong ma trận `K` theo tỷ lệ crop tương ứng
-- [ ] Tạo `DataLoader` với `batch_size=16`, `shuffle=True`, `num_workers=4`
+- [ ] Hoàn thiện pipeline dataset:
+  - [ ] `.shuffle(buffer_size=1000)`
+  - [ ] `.batch(16)`
+  - [ ] `.prefetch(tf.data.AUTOTUNE)`
 - [ ] Viết test nhanh ở cuối file:
   ```python
-  batch = next(iter(dataloader))
-  print(batch['image'].shape)     # [16, 3, 224, 224]
-  print(batch['keypoints'].shape) # [16, 21, 3]
-  print(batch['K'].shape)         # [16, 3, 3]
+  batch = next(iter(dataset))
+  print(batch['image'].shape)     # (16, 224, 224, 3)
+  print(batch['keypoints'].shape) # (16, 21, 3)
+  print(batch['K'].shape)         # (16, 3, 3)
   ```
 
 > **CHECKPOINT 1.3:** Chạy `python data/dataset.py`. Output in đúng 3 shape ở trên, không có lỗi dimension hay key.

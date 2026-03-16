@@ -9,6 +9,8 @@ Two models are trained:
 1. Hand Detection Model
 2. Hand Landmark Model
 
+After training, the project includes an app integration stage to convert gesture predictions into reliable music control commands.
+
 The training pipeline ensures reproducibility, scalability, and consistent experiment tracking.
 
 ---
@@ -38,6 +40,9 @@ Model Evaluation
 │
 ▼
 Model Export
+│
+▼
+Realtime App Integration (Gesture → Music Command)
 
 ```
 
@@ -216,6 +221,24 @@ Typical range:
 ```
 
 Training stops when validation loss stops improving.
+
+---
+
+# 7. Post-Training Application Integration
+
+After obtaining a stable landmark model:
+
+1. Build gesture features from predicted landmarks
+2. Train or tune gesture classifier for command labels
+3. Integrate classifier into realtime webcam loop
+4. Add command safety: threshold, debounce, cooldown
+5. Validate end-to-end behavior on real music control scenarios
+
+App-level acceptance criteria:
+
+- command latency low enough for natural interaction
+- low false-trigger rate in normal indoor lighting
+- stable behavior across multiple users and backgrounds
 
 ---
 

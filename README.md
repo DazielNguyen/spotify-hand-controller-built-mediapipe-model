@@ -1,6 +1,6 @@
 # Spotify Hand Controller Built Without MediaPipe
 
-TensorFlow-based hand gesture control project for macOS. The goal is to run a lightweight pipeline on webcam input, estimate 21 hand landmarks without MediaPipe, classify gestures, and map those gestures to system actions such as play/pause, next track, and volume control.
+TensorFlow-based hand gesture control project for macOS. The goal is to run a lightweight pipeline on webcam input, estimate 21 hand landmarks without MediaPipe, classify gestures, and map those gestures to real music-control actions such as play/pause, next track, previous track, and volume control.
 
 ## Status
 
@@ -14,6 +14,12 @@ This repository is currently organized as a structure-only scaffold:
 - gesture and macOS action logic remain in `gesture/` and `mac_control/`
 
 The repository currently focuses on folder layout, module boundaries, and file placeholders. Model training, inference, evaluation, gesture logic, and macOS control are not implemented yet.
+
+Final product target:
+
+- realtime webcam-based hand gesture music controller
+- command safety layer: threshold + debounce + cooldown
+- practical UX with low false-trigger rate
 
 ## Project Structure
 
@@ -77,6 +83,8 @@ Suggested order for filling in the scaffold:
 3. Implement training loop in `training/train_landmark.py`
 4. Implement inference pipeline in `inference/`
 5. Implement gesture mapping and macOS control logic
+6. Add decision safety layer (threshold, debounce, cooldown)
+7. Validate app-level metrics: command success, false trigger rate, command latency
 
 ## Notes
 

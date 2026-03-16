@@ -15,7 +15,7 @@
   - [ ] Đọc mask → tạo alpha channel
   - [ ] Chọn background ngẫu nhiên từ `bg_pool`, resize về cùng kích thước ảnh
   - [ ] Alpha blending: `result = hand * mask + background * (1 - mask)`
-- [ ] Tích hợp vào `FreiHANDDataset.__getitem__` với xác suất 50% (giữ green screen 50% còn lại)
+- [ ] Tích hợp vào pipeline `tf.data.Dataset.map(...)` với xác suất 50% (giữ green screen 50% còn lại)
 - [ ] Viết script debug: vẽ 1 batch 16 ảnh ra grid, lưu `outputs/bg_augmentation_grid.jpg`
 
 > **CHECKPOINT 7.1:** Mở `bg_augmentation_grid.jpg`. Khoảng một nửa số ảnh phải thấy bàn tay nằm trên nền tự nhiên (rừng, đường, ...). Chất lượng compositing phải tự nhiên, không thấy viền xanh hay artifact.
@@ -24,30 +24,22 @@
 
 ## Chiều: Real-time / Inference Demo
 
-- [ ] Cài `pyrender` để vẽ mesh 3D: `pip install pyrender`
-- [ ] Tạo file `inference/inference_image.py`:
-  - [ ] Load ảnh từ path: `python inference_image.py --image my_hand.jpg`
-  - [ ] Preprocess: crop vuông, resize 224×224, normalize theo ImageNet
-  - [ ] Forward qua Shape Network → `beta [10]`, `theta [45]`, `global_orient [3]`, `trans [3]`
-  - [ ] Truyền params vào MANO → `vertices [778, 3]`
-  - [ ] Chiếu `vertices` lên 2D bằng ma trận K ước tính
-  - [ ] Dùng `pyrender` hoặc `matplotlib` + `trimesh` để render mesh 3D đè lên ảnh gốc:
-    ```python
-    scene = pyrender.Scene()
-    mesh = pyrender.Mesh.from_trimesh(hand_trimesh)
-    scene.add(mesh)
-    renderer = pyrender.OffscreenRenderer(224, 224)
-    color, depth = renderer.render(scene)
-    overlay = cv2.addWeighted(original_image, 0.7, color, 0.3, 0)
-    ```
-  - [ ] Lưu ảnh kết quả ra `outputs/inference_result.jpg`
-- [ ] Chụp ảnh tay bạn với ít nhất 3 pose khác nhau:
-  - [ ] Chữ V (Victory)
-  - [ ] Nắm đấm
-  - [ ] Tay xòe thẳng
-- [ ] Chạy inference và lưu kết quả cho cả 3 pose
+- [ ] Tạo file `inference/webcam_inference.py` theo luồng sản phẩm thực tế:
+  - [ ] Webcam input → hand detect/crop → landmark model → gesture classifier
+  - [ ] Decision layer: threshold + debounce + cooldown
+  - [ ] Action mapper: gesture -> command nhạc
+  - [ ] macOS adapter: gửi media keys (`play_pause`, `next_track`, `previous_track`, `volume_up`, `volume_down`)
+- [ ] Tạo chế độ `--dry-run` để in lệnh thay vì bắn phím thật khi đang debug
+- [ ] Chuẩn bị bộ test gesture thực tế:
+  - [ ] Nắm đấm -> play/pause
+  - [ ] Tay xòe -> next track
+  - [ ] Chữ V -> previous track
+  - [ ] Thumbs up -> volume up
+  - [ ] Thumbs down -> volume down
+- [ ] Quay video demo 30-60 giây thể hiện luồng end-to-end
+- [ ] Lưu artifact demo vào `outputs/demo/` (video + log lệnh)
 
-> **CHECKPOINT 7.2:** Có ít nhất 1 ảnh bản thân giơ tay chữ V với mesh 3D dự đoán đè lên tay **trông hợp lý**. Đây là bằng chứng chính cho demo project.
+> **CHECKPOINT 7.2:** Có video demo chạy realtime, thực hiện được ít nhất 3 lệnh nhạc khác nhau với độ trễ thấp và không bị trigger nhầm quá nhiều.
 
 ---
 
@@ -103,5 +95,5 @@
 - [ ] **Tổng nguyên tắc:** Dành tối đa 2-3 tiếng/checkpoint. Nếu quá thời gian, ghi rõ vào notes và chuyển sang bước tiếp theo.
 - [ ] **Kẹt ở Phép chiếu 3D/2D:** Vẽ trục tọa độ ra giấy. Kiểm tra `K` có bị sai `fx`, `fy`, `cx`, `cy` sau khi resize ảnh không.
 - [ ] **Kẹt ở Overfit test:** Giảm `batch_size=2`, tắt hết augmentation, kiểm tra scale labels (`pred` ra 0-64 nhưng `gt` lại 0-1?).
-- [ ] **MANO graph bị đứt:** Tìm tất cả chỗ `.detach()`, `.numpy()`, `.item()` nằm giữa pipeline, loại bỏ chúng.
-- [ ] **Inference mesh lệch hoàn toàn:** Kiểm tra `global_orient` — hay bị flip trục Y/Z giữa MANO coordinate system và camera coordinate system.
+- [ ] **Gesture bị nhảy liên tục:** Tăng debounce frame và thêm cooldown theo command.
+- [ ] **Bắn nhầm lệnh nhạc:** Tăng confidence threshold, thêm class `unknown`, giảm độ nhạy mapper.

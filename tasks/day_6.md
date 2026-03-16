@@ -1,6 +1,6 @@
 # NGÀY 6: Đánh giá mô hình (Evaluation & Metrics)
 
-**Mục tiêu:** Chuyển từ "code chạy được" sang "báo cáo khoa học". Phải có con số chứng minh.
+**Mục tiêu:** Chuyển từ "code chạy được" sang "sản phẩm dùng được". Phải có cả chỉ số model và chỉ số điều khiển nhạc thực tế.
 
 ---
 
@@ -17,7 +17,7 @@
   - [ ] Trả về `pck_per_joint [21]` và `pck_overall` (scalar)
 - [ ] Viết script chạy eval trên toàn bộ tập test:
   - [ ] Load best checkpoint của Pose Network
-  - [ ] Chạy inference không gradient (`torch.no_grad()`)
+  - [ ] Chạy inference với `model(..., training=False)` hoặc trong vòng lặp eval không dùng `GradientTape`
   - [ ] Tính PCK@20mm cho từng joint và overall
   - [ ] In bảng kết quả ra terminal
 
@@ -56,3 +56,24 @@
   - [ ] Nền bị confused với tay?
 - [ ] Ghi lại nhận xét vào `docs/experiment_results.md` (section "Error Analysis")
 - [ ] Đề xuất ít nhất 2 hướng cải thiện cụ thể dựa trên phân tích trên
+
+---
+
+## Đánh giá cấp ứng dụng: Music Control Reliability
+
+- [ ] Tạo file `evaluation/eval_app_control.py`
+- [ ] Định nghĩa bộ chỉ số cấp ứng dụng:
+  - [ ] `Command Success Rate` = số lệnh đúng / tổng số cử chỉ chủ đích
+  - [ ] `False Trigger Rate` = số lệnh bắn nhầm / phút
+  - [ ] `Mean Command Latency` = thời gian từ lúc cử chỉ ổn định đến lúc gửi lệnh hệ thống
+- [ ] Thiết kế protocol test thực tế:
+  - [ ] 5 phiên test trong điều kiện ánh sáng bình thường
+  - [ ] 5 phiên test với background phức tạp
+  - [ ] 5 phiên test cho từng lệnh: `play_pause`, `next_track`, `previous_track`, `volume_up`, `volume_down`
+- [ ] Bật logic an toàn trong app để test:
+  - [ ] confidence threshold
+  - [ ] debounce theo số frame liên tiếp
+  - [ ] cooldown giữa 2 lần bắn lệnh cùng loại
+- [ ] Ghi toàn bộ kết quả vào `docs/experiment_results.md`
+
+> **CHECKPOINT 6.3:** Đạt ngưỡng tạm chấp nhận cho demo ứng dụng: False Trigger Rate thấp, Command Latency ổn định, và Command Success Rate đủ cao để dùng thực tế.

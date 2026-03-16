@@ -1,12 +1,12 @@
-# Real-Time Hand Pose Estimation for MacOS Gesture Control (TensorFlow)
+# Real-Time Hand Gesture Music Controller for MacOS (TensorFlow)
 
 ## 1. Project Overview
 
-This project aims to build a **real-time hand pose estimation system** capable of detecting **21 hand keypoints** using **TensorFlow**, without relying on any external hand tracking frameworks.
+This project aims to build a **real-world hand gesture music controller** using **TensorFlow**, without relying on any external hand tracking frameworks.
 
-The system will process webcam input, detect the hand, estimate hand landmarks, recognize gestures, and control system functions on macOS (such as play/pause music, next track, and volume control).
+The system will process webcam input, detect the hand, estimate hand landmarks, recognize gestures, and control music playback on macOS (play/pause, next track, previous track, volume up/down).
 
-The entire pipeline must run **in real time (20–30 FPS)** on a MacBook CPU.
+The entire pipeline must run **in real time (20-30 FPS)** on a MacBook CPU.
 
 ---
 
@@ -16,15 +16,22 @@ The entire pipeline must run **in real time (20–30 FPS)** on a MacBook CPU.
 
 - Detect human hand from webcam video
 - Predict **21 hand keypoints**
-- Recognize hand gestures
-- Control macOS system functions
-- Achieve **real-time performance**
+- Recognize hand gestures robustly
+- Control music playback actions on macOS
+- Achieve **real-time performance** with low false trigger rate
 
 ## Technical Constraints
 
 - Do NOT use MediaPipe
 - Build models using **TensorFlow**
 - System must run on **CPU in real-time**
+
+## Product Constraints
+
+- Add confidence threshold for gesture activation
+- Add frame-based debounce before executing command
+- Add cooldown to prevent repeated accidental triggers
+- Keep `unknown` class as default no-action output
 
 ---
 
@@ -49,7 +56,10 @@ Hand Landmark Model (21 Keypoints)
 Gesture Recognition Model
 │
 ▼
-MacOS Control System
+Decision Layer (threshold + debounce + cooldown)
+│
+▼
+MacOS Music Control System
 
 ```
 

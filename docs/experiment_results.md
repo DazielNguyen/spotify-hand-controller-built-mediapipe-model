@@ -10,6 +10,7 @@ Experiments focus on:
 - training stability
 - inference performance
 - real-time capability
+- music-control reliability in real usage
 
 ---
 
@@ -19,7 +20,7 @@ Hardware:
 
 ```
 
-CUDA
+MacBook CPU (target runtime)
 ```
 
 Software:
@@ -199,7 +200,23 @@ Observed FPS:
 
 ---
 
-# 6. Visual Results
+# 6. Music Control Reliability
+
+In addition to model metrics, evaluate app-level behavior:
+
+- Command Success Rate: intended gesture triggers correct command
+- False Trigger Rate: command fired when user did not intend action
+- Mean Command Latency: time from stable gesture to command execution
+
+Suggested protocol:
+
+1. Run multiple gesture sessions per command in indoor lighting
+2. Repeat tests on cluttered and changing backgrounds
+3. Measure stability with debounce/cooldown enabled
+
+---
+
+# 7. Visual Results
 
 Example output:
 
