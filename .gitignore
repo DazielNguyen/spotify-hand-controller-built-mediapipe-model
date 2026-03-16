@@ -19,3 +19,6 @@ venv/
 
 # IDE
 .vscode/*.code-workspace
+
+# Local datasets
+dataset/
