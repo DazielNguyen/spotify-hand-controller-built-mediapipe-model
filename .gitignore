@@ -22,3 +22,7 @@ venv/
 
 # Local datasets
 dataset/
+
+# Large MANO assets (exceed GitHub file size limit)
+models/mano/SMPLH_female.pkl
+models/mano/SMPLH_male.pkl

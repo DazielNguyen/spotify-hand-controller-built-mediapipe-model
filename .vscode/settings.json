@@ -25,5 +25,7 @@
 		{
 			"text": "Generate commit messages using this format: <type>: <short summary>. Use lowercase, imperative mood, and no ending period. Choose <type> from: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert, add. Type mapping: use feat for new user-facing features, fix for bug fixes, docs for documentation-only changes, chore for maintenance/config/dependency updates, and add only for simple additions that are not full features."
 		}
-	]
+	],
+	"cursorpyright.analysis.autoImportCompletions": true,
+	"cursorpyright.analysis.typeCheckingMode": "basic"
 }

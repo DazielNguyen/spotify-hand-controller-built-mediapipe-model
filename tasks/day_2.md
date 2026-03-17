@@ -6,33 +6,35 @@
 
 ## Sáng: Cài đặt và Hiểu MANO
 
-- [ ] Chọn thư viện MANO phù hợp để dùng chung với pipeline TensorFlow:
+- [x] Chọn thư viện MANO phù hợp để dùng chung với pipeline TensorFlow:
   ```bash
   pip install smplx trimesh
   ```
-- [ ] Tải file model weights MANO (`MANO_RIGHT.pkl`) từ trang chủ MANO, đặt vào thư mục `models/mano/`
-- [ ] Đọc và hiểu cấu trúc input của MANO:
-  - [ ] `pose` (alias `theta`): tensor shape `(B, 45)` — góc xoay Axis-Angle của 15 khớp (mỗi khớp 3 chiều)
-  - [ ] `betas` (alias `beta`): tensor shape `(B, 10)` — hệ số hình dạng bàn tay (dài/ngắn, mập/gầy)
-  - [ ] `global_orient`: tensor shape `(B, 3)` — hướng xoay toàn bộ bàn tay trong không gian
-- [ ] Viết script `scripts/test_mano.py`:
-  - [ ] Khởi tạo model MANO từ thư viện đã chọn
-  - [ ] Truyền vào các tensor toàn số 0: `pose=tf.zeros((1, 45))`, `betas=tf.zeros((1, 10))`
-  - [ ] In shape của output: `vertices` và `joints`
+- [x] Tải file model weights MANO (`MANO_RIGHT.pkl`) từ trang chủ MANO, đặt vào thư mục `models/mano/`
+- [x] Đọc và hiểu cấu trúc input của MANO:
+  - [x] `pose` (alias `theta`): tensor shape `(B, 45)` — góc xoay Axis-Angle của 15 khớp (mỗi khớp 3 chiều)
+  - [x] `betas` (alias `beta`): tensor shape `(B, 10)` — hệ số hình dạng bàn tay (dài/ngắn, mập/gầy)
+  - [x] `global_orient`: tensor shape `(B, 3)` — hướng xoay toàn bộ bàn tay trong không gian
+- [x] Viết script `scripts/test_mano.py`:
+  - [x] Khởi tạo model MANO từ thư viện đã chọn
+  - [x] Truyền vào các tensor toàn số 0: `pose=tf.zeros((1, 45))`, `betas=tf.zeros((1, 10))`
+  - [x] In shape của output: `vertices` và `joints`
 
 > **CHECKPOINT 2.1:** Output phải trả về `vertices` shape `[1, 778, 3]` và `joints` shape `[1, 21, 3]`. Không có RuntimeError về device hay shape mismatch.
+> ⚠️ *Hiện tại joints shape = [1, 16, 3] - cần thêm tham số để lấy 21 joints*
 
 ---
 
 ## Chiều: Render Mesh lên màn hình
 
-- [ ] Cài `trimesh`: `pip install trimesh`
-- [ ] Lấy tensor `vertices [1, 778, 3]` từ MANO, chuyển sang numpy
-- [ ] Lấy `faces` (tam giác) từ model MANO hoặc file template mesh — shape `(1538, 3)`
-- [ ] Tạo `trimesh.Trimesh(vertices=v, faces=f)` và lưu thành `outputs/hand.obj`
-- [ ] Mở `hand.obj` bằng phần mềm xem 3D (Preview trên Mac / 3D Viewer trên Windows)
+- [x] Cài `trimesh`: `pip install trimesh`
+- [x] Lấy tensor `vertices [1, 778, 3]` từ MANO, chuyển sang numpy
+- [x] Lấy `faces` (tam giác) từ model MANO hoặc file template mesh — shape `(1538, 3)`
+- [x] Tạo `trimesh.Trimesh(vertices=v, faces=f)` và lưu thành `outputs/hand.obj`
+- [x] Mở `hand.obj` bằng phần mềm xem 3D (Preview trên Mac / 3D Viewer trên Windows)
 
 > **CHECKPOINT 2.2:** Nhìn thấy một bàn tay 3D tư thế thẳng (A-pose) màu xám. Nếu chỉ thấy điểm hoặc đường thẳng thì `faces` bị sai — kiểm tra lại.
+> ✅ *Đã tạo outputs/hand.obj và hand.glb thành công!*
 
 ---
 
