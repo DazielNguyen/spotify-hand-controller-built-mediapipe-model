@@ -48,3 +48,4 @@
 - [ ] Lưu ảnh ra `outputs/test_mano_overlay.jpg`
 
 > **CHECKPOINT 2.3 (Visual Test):** Mở `test_mano_overlay.jpg`. Đám điểm đỏ li ti phải tạo thành hình bàn tay **bọc khít** toàn bộ diện tích bàn tay trong ảnh, không bị lệch ra ngoài hay thiếu vùng nào.
+
