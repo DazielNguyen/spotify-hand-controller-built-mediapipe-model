@@ -40,12 +40,12 @@
 
 ## Tối: Đồng bộ MANO với dữ liệu FreiHAND
 
-- [ ] Load `training_mano.json` từ FreiHAND — chứa `[theta (48,), beta (10,)]` cho từng ảnh
-- [ ] Tách `global_orient = theta[:3]` và `hand_pose = theta[3:48]`
-- [ ] Truyền đúng ground-truth `theta, beta` vào MANO → lấy ra `vertices [1, 778, 3]`
-- [ ] Dùng hàm `project_3D_to_2D` đã viết ở Ngày 1 để chiếu 778 đỉnh mesh lên ảnh 2D
-- [ ] Vẽ tất cả 778 đỉnh dạng chấm li ti (1px) màu đỏ lên ảnh RGB gốc
-- [ ] Lưu ảnh ra `outputs/test_mano_overlay.jpg`
+- [x] Load `training_mano.json` từ FreiHAND — chứa `[theta (48,), beta (10,)]` cho từng ảnh
+- [x] Tách `global_orient = theta[:3]` và `hand_pose = theta[3:48]`
+- [x] Truyền đúng ground-truth `theta, beta` vào MANO → lấy ra `vertices [1, 778, 3]`
+- [x] Dùng hàm `project_3D_to_2D` đã viết ở Ngày 1 để chiếu 778 đỉnh mesh lên ảnh 2D
+- [x] Vẽ tất cả 778 đỉnh dạng chấm li ti (1px) màu đỏ lên ảnh RGB gốc
+- [x] Lưu ảnh ra `outputs/test_mano_overlay.jpg`
 
 > **CHECKPOINT 2.3 (Visual Test):** Mở `test_mano_overlay.jpg`. Đám điểm đỏ li ti phải tạo thành hình bàn tay **bọc khít** toàn bộ diện tích bàn tay trong ảnh, không bị lệch ra ngoài hay thiếu vùng nào.
 
